@@ -6,5 +6,4 @@ int main() {
 	return 0;
 }
 
-// 수정
-// pull 테스트
+// branch test
