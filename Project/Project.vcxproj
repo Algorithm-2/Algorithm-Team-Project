@@ -124,6 +124,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="needlman.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="read.txt" />
+    <Text Include="sequence.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="needlman.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
