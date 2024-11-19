@@ -123,7 +123,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.c" />
+    <ClCompile Include="bruteforce.cpp" />
+    <ClCompile Include="kmp.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="needlman.cpp" />
+    <ClCompile Include="rabin.cpp" />
+    <ClCompile Include="sequenceGenerator.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="read.txt" />
+    <Text Include="sequence.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bruteforce.h" />
+    <ClInclude Include="kmp.h" />
+    <ClInclude Include="needlman.h" />
+    <ClInclude Include="rabin.h" />
+    <ClInclude Include="sequenceGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
