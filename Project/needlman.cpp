@@ -10,8 +10,6 @@
 #define GAP_OPEN -1
 #define GAP_EXT -1
 
-
-
 void readFile(const char *filename, char *content);
 int needlemanWunsch(char *query, char *target);
 void measureAccuracy(const char *predicted, const char *target);
@@ -19,10 +17,7 @@ void restoreSequence(char *seq1, char *seq2, char *restoredSeq);
 int levenshteinDistance(const char *str1, const char *str2);
 void ignoreGapsAndMeasureAccuracy(const char *predicted, const char *target);
 
-
-
-
-int execute_needlman() {
+void execute_Needlman() {
 	clock_t start, end;
 	double time_spent;
 	char readSeq[MAX_LENGTH], targetSeq[MAX_LENGTH];
@@ -35,7 +30,7 @@ int execute_needlman() {
 	time_spent = (double)(end - start) / CLOCKS_PER_SEC;
 	printf("Execution Time: %.6f seconds\n", time_spent);
 	ignoreGapsAndMeasureAccuracy(restoredSeq, targetSeq);
-	return time_spent;
+
 }
 
 void readFile(const char *filename, char *content) {
