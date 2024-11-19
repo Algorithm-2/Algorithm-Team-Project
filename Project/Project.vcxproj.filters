@@ -15,10 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="sequenceGenerator.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="needlman.c">
+    <ClCompile Include="bruteforce.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="rabin.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="kmp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="needlman.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,6 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="needlman.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bruteforce.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rabin.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sequenceGenerator.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="kmp.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
