@@ -7,9 +7,9 @@
 #include "sequenceGenerator.h"
 
 int main() {
-	//execute_Bruteforce();
-	execute_KMP();
-	execute_Needlman();
-	execute_Rabin();
+	execute_Bruteforce();
+	// execute_KMP();
+	// execute_Needlman();
+	// execute_Rabin();
 	return 0;
 }
