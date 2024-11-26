@@ -6,15 +6,54 @@
 #include <string>
 #include <algorithm>
 #include <ctime>
-#define MAXLEN 25	// 최대 겹치는 read 길이
+#define MAXLEN 10	// 최대 겹치는 read 길이
 using namespace std;
 
 string result = "";
-vector<string> reads_all; // 완전 
+vector<string> reads_all; // 기본 브루트포스
 vector<string> reads_A[4];	// A로 시작하는 read들이 저장됨, 끝나는 알파벳에 따라 저장되는 vector의 인덱스가 달라짐
 vector<string> reads_C[4];	// C로 시작하는 read들이 저장됨, 끝나는 알파벳에 따라 저장되는 vector의 인덱스가 달라짐
 vector<string> reads_T[4];	// T로 시작하는 read들이 저장됨, 끝나는 알파벳에 따라 저장되는 vector의 인덱스가 달라짐
 vector<string> reads_G[4];	// G로 시작하는 read들이 저장됨, 끝나는 알파벳에 따라 저장되는 vector의 인덱스가 달라짐
+
+// 정방향 기본 브루트포스 (read가 result의 뒤쪽에 붙는 경우)
+bool d_bruteforce_forward(int curlen, vector<string> reads) {
+	int res_pre_idx = result.length() - curlen; // result 문자열에서 패턴을 비교할 첫번째 인덱스
+	int j;
+	if (!reads.empty()) {
+		for (int i = 0; i < reads.size(); i++) {
+			for (j = 0; j < curlen; j++) { // 패턴 비교
+				if (result[res_pre_idx + j] != reads[i][j]) break; // 패턴이 일치하지 않으면 break
+			}
+			if (j == curlen) { // 패턴 겹침
+				result += reads[i].substr(curlen); // result 뒤쪽에 이어줌
+				reads.erase(reads.begin() + i); // 이어준 read vector에서 삭제
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+// 역방향 기본 브루트포스 (read가 result의 앞쪽에 붙는 경우)
+bool d_bruteforce_backward(int curlen, vector<string> reads) {
+	int read_pre_idx; // read 에서 패턴을 비교할 첫번째 인덱스
+	int j;
+	if (!reads.empty()) {
+		for (int i = 0; i < reads.size(); i++) { // 패턴 비교
+			read_pre_idx = reads[i].length() - curlen;
+			for (j = 0; j < curlen; j++) {
+				if (reads[i][read_pre_idx + j] != result[j]) break; // 패턴이 일치하지 않으면 break
+			}
+			if (j == curlen) { // 패턴 겹침
+				result = reads[i] + result.substr(curlen); // result 앞쪽에 이어줌
+				reads.erase(reads.begin() + i); // 이어준 read vector에서 삭제
+				return true;
+			}
+		}
+	}
+	return false;
+}
 
 // 정방향 브루트포스 (read가 result의 뒤쪽에 붙는 경우)
 bool bruteforce_forward(int curlen, vector<string>(&reads)[4]) {
@@ -99,38 +138,38 @@ void execute_Bruteforce() {
 	createReadArray();
 	int curlen = MAXLEN;
 	clock_t start = clock();
-	while (curlen >= 15) { // 겹치는 길이가 하한점 까지 내려가면 더이상 일치하는 패턴이 존재하지 않음으로 종료
+	while (true) { // 겹치는 길이가 하한점 까지 내려가면 더이상 일치하는 패턴이 존재하지 않음으로 종료
 		bool flag = false; // 겹침 유무를 판단하는 변수
-		// bruteforce(curlen,reads_all);
+
 		char res_pre_c = result[result.length() - curlen]; // read가 result의 뒤에 붙는 경우에 
 		char res_sur_c = result[curlen - 1];
 		// 순방향
+		// flag = d_bruteforce_forward(curlen, reads_all);
 		if (res_pre_c == 'A')  flag = bruteforce_forward(curlen, reads_A);			// A_ 형식인 경우
 		else if (res_pre_c == 'C')  flag = bruteforce_forward(curlen, reads_C);		// C_ 형식인 경우
 		else if (res_pre_c == 'T')  flag = bruteforce_forward(curlen, reads_T);		// T_ 형식인 경우
 		else if (res_pre_c == 'G')  flag = bruteforce_forward(curlen, reads_G);		// G_ 형식인 경우
 		// 역방향
 		if (!flag) {
+			// flag = d_bruteforce_backward(curlen, reads_all);
 			if (res_sur_c == 'A') flag = bruteforce_backward(curlen, reads_A[0], reads_C[0], reads_T[0], reads_G[0]);			// _A 형식인 경우
 			else if (res_sur_c == 'C') flag = bruteforce_backward(curlen, reads_A[1], reads_C[1], reads_T[1], reads_G[1]);		// _C 형식인 경우
 			else if (res_sur_c == 'T') flag = bruteforce_backward(curlen, reads_A[2], reads_C[2], reads_T[2], reads_G[2]);		// _T 형식인 경우
 			else if (res_sur_c == 'G') flag = bruteforce_backward(curlen, reads_A[3], reads_C[3], reads_T[3], reads_G[3]);		// _G 형식인 경우
 		}
 		if (flag) {
-			curlen = MAXLEN; // 문자열이 늘어났다면 최대 겹침 길이부터 다시 탐색
-
 			// 어떤 유형의 read가 소모되는지 시각적 표시
 			cout << reads_A[0].size() << ' ' << reads_A[1].size() << ' ' << reads_A[2].size() << ' ' << reads_A[3].size() << "\n";
 			cout << reads_C[0].size() << ' ' << reads_C[1].size() << ' ' << reads_C[2].size() << ' ' << reads_C[3].size() << "\n";
 			cout << reads_T[0].size() << ' ' << reads_T[1].size() << ' ' << reads_T[2].size() << ' ' << reads_T[3].size() << "\n";
 			cout << reads_G[0].size() << ' ' << reads_G[1].size() << ' ' << reads_G[2].size() << ' ' << reads_G[3].size() << "\n\n";
 		}
-		else curlen--; // 문자열이 늘어나지 않았다면 겹침 길이를 줄여 다시 탐색
+		else break; // 매칭되는 read가 존재하지 않으면 종료
 	}
 	clock_t end = clock();
 	double duration = double(end - start) / CLOCKS_PER_SEC;
 	cout << "Execution Time: " << duration << " seconds" << endl;
-	cout << result << "\n"; // 최종 구성된 문자열 출력
+	// cout << result << "\n"; // 최종 구성된 문자열 출력
 	ofstream file("result.txt");
 	file << result << "\n";
 	file.close();
