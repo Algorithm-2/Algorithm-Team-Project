@@ -1,14 +1,19 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include "input.h"
+#include "create_data.h"
+#include "compare.h"
 #include "bruteforce.h"
 #include "kmp.h"
 #include "needlman.h"
 #include "rabin.h"
-#include "sequenceGenerator.h"
 
 int main() {
-	execute_Bruteforce();
-	// execute_KMP();
+	Info info = input();
+	create_data(info.N, info.L, info.P);
+
+	// execute_Bruteforce(info.P);
+	// execute_KMP(info.P);
 	// execute_Needlman();
 	// execute_Rabin();
 	return 0;
