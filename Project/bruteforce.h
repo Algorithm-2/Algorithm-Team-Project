@@ -9,9 +9,9 @@
 #include <algorithm>
 #include <ctime>
 
-bool bruteforce_forward(int curlen, vector<string>(&reads)[4]);
-bool bruteforce_backward(int curlen, vector<string>& reads_A, vector<string>& reads_C, vector<string>& reads_T, vector<string>& reads_G);
-void createReadArray();
-void execute_Bruteforce();
+bool d_bruteforce_forward(int curlen, vector<string> reads);
+bool d_bruteforce_backward(int curlen, vector<string> reads);
+void d_createReadArray();
+void execute_Bruteforce(int P);
 
 #endif
