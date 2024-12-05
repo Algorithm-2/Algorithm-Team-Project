@@ -21,7 +21,7 @@ int main() {
 		execute_Bruteforce(info.P);
 		break;
 	case 2:
-		// execute_KMP(info.P);
+		execute_KMP(info.P);
 		break;
 	case 3:
 		execute_RabinKarp(info.P);
