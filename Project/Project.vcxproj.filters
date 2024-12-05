@@ -15,13 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sequenceGenerator.c">
+    <Text Include="sequence.txt">
       <Filter>소스 파일</Filter>
-    </ClCompile>
+    </Text>
+    <Text Include="reads.txt">
+      <Filter>소스 파일</Filter>
+    </Text>
+    <Text Include="result.txt">
+      <Filter>소스 파일</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="bruteforce.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="rabin.cpp">
+    <ClCompile Include="compare.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="create_data.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="enhanced_bruteforce.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="kmp.cpp">
@@ -33,36 +50,34 @@
     <ClCompile Include="needlman.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-	<ClCompile Include="input.cpp">
+    <ClCompile Include="rabin.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="sequence.txt">
-      <Filter>소스 파일</Filter>
-    </Text>
-    <Text Include="read.txt">
-      <Filter>소스 파일</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="needlman.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="bruteforce.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="rabin.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="compare.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="sequenceGenerator.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="create_data.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="enhanced_bruteforce.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="kmp.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-	<ClInclude Include="input.h">
-	  <Filter>소스 파일</Filter>
-	</ClInclude>
+    <ClInclude Include="needlman.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rabin.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
