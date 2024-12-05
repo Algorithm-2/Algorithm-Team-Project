@@ -34,7 +34,7 @@ int gethash(const string& read) {
     return hash;
 }
 
-void rabinkarp(int pattern) {
+void execute_RabinKarp(int pattern) {
     ifstream inputFile("reads.txt");
     if (!inputFile) {
         cerr << "파일을 열 수 없습니다." << endl;
@@ -94,7 +94,7 @@ void rabinkarp(int pattern) {
     }
 
     // 복원된 문자열을 result.txt에 저장
-    ofstream resultFile("result_rabinkarp.txt");
+    ofstream resultFile("result.txt");
     resultFile << result;
     resultFile.close();
 }

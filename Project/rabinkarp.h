@@ -7,6 +7,6 @@ extern int q;      // 모듈러 계산을 위한 소수
 
 int charToValue(char c);
 int gethash(const std::string& read);
-void rabinkarp(int pattern);
+void execute_RabinKarp(int pattern);
 
 #endif

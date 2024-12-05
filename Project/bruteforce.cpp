@@ -6,7 +6,6 @@
 #include <string>
 #include <algorithm>
 #include <ctime>
-#define MAXLEN 10	// 최대 겹치는 read 길이
 using namespace std;
 
 string d_result = "";

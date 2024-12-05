@@ -7,16 +7,26 @@
 #include "enhanced_bruteforce.h"
 #include "kmp.h"
 #include "needlman.h"
-#include "rabin.h"
+#include "rabinkarp.h"
 
 int main() {
 	Info info = input();
 	create_data(info.N, info.L, info.P);
-
-	execute_Bruteforce(info.P);
-	// execute_KMP(info.P);
-	// execute_Needlman();
-	// execute_Rabin();
+	switch (info.toggle)
+	{
+	case 0:
+		d_execute_Bruteforce(info.P); 
+		break;
+	case 1:
+		execute_Bruteforce(info.P);
+		break;
+	case 2:
+		// execute_KMP(info.P);
+		break;
+	case 3:
+		execute_RabinKarp(info.P);
+		break;
+	}
 	compare();
 	return 0;
 }
