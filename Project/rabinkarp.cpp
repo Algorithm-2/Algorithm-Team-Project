@@ -3,8 +3,6 @@
 #include <vector>
 #include <string>
 #include <tuple>
-#include <chrono>
-#include <random>
 #include <ctime>
 using namespace std;
 
@@ -34,22 +32,23 @@ int gethash(const string& read) {
     return hash;
 }
 
-void execute_RabinKarp(int pattern) {
+void createReadArray() {
     ifstream inputFile("reads.txt");
-    if (!inputFile) {
-        cerr << "파일을 열 수 없습니다." << endl;
-        return;
-    }
     vector<string> lines;
     string line;
     while (getline(inputFile, line)) {
         lines.push_back(line);
     }
     inputFile.close();
+}
 
-    vector<tuple<int, string, int>> readNhash; // read, read의 접두사 해시값, read의 접미사 해시값 저장된 tuple 배열
+void execute_RabinKarp(int pattern) {
+    
+    createReadArray();
+    clock_t start = clock();
 
     // 해시 테이블 생성
+    vector<tuple<int, string, int>> readNhash; // read, read의 접두사 해시값, read의 접미사 해시값 저장된 tuple 배열
     for (int i = 0; i < lines.size(); i++) {
         readNhash.push_back({
             gethash(lines[i].substr(0, pattern)), // read 접두사 해시값
@@ -92,6 +91,11 @@ void execute_RabinKarp(int pattern) {
             break;
         }
     }
+
+    clock_t end = clock();
+
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Execution Time: " << duration << " seconds" << endl;
 
     // 복원된 문자열을 result.txt에 저장
     ofstream resultFile("result.txt");
