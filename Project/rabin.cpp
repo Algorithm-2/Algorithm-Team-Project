@@ -1,121 +1,100 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
-#include <algorithm>
-
+#include <tuple>
+#include <chrono>
+#include <random>
+#include <ctime>
 using namespace std;
 
+#define DNA_SEQUENCE "sequence.txt"
+#define READS "reads.txt"
+
 int d = 4;          // 진수
-int pattern = 10;   // 고정 겹치는 부분 길이
-int q = 101;        // 소수(모듈러)
+int q = 10007;      // 모듈러 계산을 위한 소수
 
 // 문자를 숫자로 변환
 int charToValue(char c) {
-	switch (c) {
-	case 'A': return 0;
-	case 'C': return 1;
-	case 'G': return 2;
-	case 'T': return 3;
-	default: return -1; // 잘못된 입력 처리
-	}
+    switch (c) {
+    case 'A': return 0;
+    case 'C': return 1;
+    case 'G': return 2;
+    case 'T': return 3;
+    default: return -1; // 잘못된 입력 처리
+    }
 }
 
 // 해시값 계산
 int gethash(const string& read) {
-	int hash = 0;
-	for (char c : read) {
-		hash = (d * hash + charToValue(c)) % q;
-	}
-	return hash;
+    int hash = 0;
+    for (char c : read) {
+        hash = (d * hash + charToValue(c)) % q;
+    }
+    return hash;
 }
 
-// 일치율 계산
-double calculateMatchRate(const string& original, const string& reconstructed) {
-	int matchCount = 0;
-	int minLength = min(original.size(), reconstructed.size());
+void rabinkarp(int pattern) {
+    ifstream inputFile("reads.txt");
+    if (!inputFile) {
+        cerr << "파일을 열 수 없습니다." << endl;
+        return;
+    }
+    vector<string> lines;
+    string line;
+    while (getline(inputFile, line)) {
+        lines.push_back(line);
+    }
+    inputFile.close();
 
-	for (int i = 0; i < minLength; ++i) {
-		if (original[i] == reconstructed[i]) {
-			matchCount++;
-		}
-	}
+    vector<tuple<int, string, int>> readNhash; // read, read의 접두사 해시값, read의 접미사 해시값 저장된 tuple 배열
 
-	return (static_cast<double>(matchCount) / original.size()) * 100;
-}
+    // 해시 테이블 생성
+    for (int i = 0; i < lines.size(); i++) {
+        readNhash.push_back({
+            gethash(lines[i].substr(0, pattern)), // read 접두사 해시값
+            lines[i], // read
+            gethash(lines[i].substr(lines[i].size() - pattern, pattern)) // read 접미사 해시값
+            });
+    }
 
-// 모든 visited가 true인지 확인하는 함수
-bool allVisited(vector<bool>& visited) {
-	for (bool v : visited) {
-		if (!v) return false;
-	}
-	return true;
-}
+    // 첫 번째 read를 result로 초기화
+    string result = get<1>(readNhash[0]);
+    int resultPreHash = get<0>(readNhash[0]);
+    int resultSufHash = get<2>(readNhash[0]);
 
-void execute_Rabin() {
-	ifstream inputFile("read.txt");
-	if (!inputFile) {
-		cerr << "파일을 열 수 없습니다." << endl;
-		exit(1);
-	}
+    bool endcheck; // 이전 실행에서 result가 변경되었는지 확인하는 변수
+    while (true) {
+        endcheck = false;
+        for (auto it = readNhash.begin() + 1; it != readNhash.end();) { // 해시테이블에 남아있는 모든 read 탐색
+            if (resultPreHash == get<2>(*it)) { // result의 접두사 해시값과 read의 접미사 해시값 같은지 확인 (result 앞에 read가 붙는 경우)
+                if (result.substr(0, pattern) == get<1>(*it).substr(get<1>(*it).size() - pattern, pattern)) { // 실제로 같은지 확인
+                    result = get<1>(*it).substr(0, get<1>(*it).size() - pattern) + result; // result 앞에 read 붙이기
+                    resultPreHash = get<0>(*it); // result 해시값 업데이트
+                    it = readNhash.erase(it); // 현재 요소 제거 후 반복자 갱신
+                    endcheck = true;
+                    continue; // 다음 반복자로 이동
+                }
+            }
+            else if (resultSufHash == get<0>(*it)) { // result의 접미사 해시값과 read의 접두사 해시값 같은지 확인 (result 뒤에 read가 붙는 경우)
+                if (result.substr(result.size() - pattern, pattern) == get<1>(*it).substr(0, pattern)) { // 실제로 같은지 확인
+                    result = result + get<1>(*it).substr(pattern); // result 뒤에 read 붙이기
+                    resultSufHash = get<2>(*it); // result 해시값 업데이트
+                    it = readNhash.erase(it); // 현재 요소 제거 후 반복자 갱신
+                    endcheck = true;
+                    continue; // 다음 반복자로 이동
+                }
+            }
+            ++it; // 조건을 만족하지 않으면 다음 요소로 이동
+        }
 
-	vector<string> lines; // read 저장 배열
-	string line;
+        if (!endcheck) { // endcheck==false라면 이전 실행에서 result가 변경되지 않았으므로 더이상 추가할 read가 없다는 것을 의미
+            break;
+        }
+    }
 
-	while (getline(inputFile, line)) {
-		lines.push_back(line);
-	}
-	inputFile.close();
-
-	if (lines.empty()) {
-		cerr << "입력 데이터가 비어 있습니다." << endl;
-		exit(1);
-	}
-
-	string result = lines[0]; // 첫 번째 read를 result로 초기화
-	vector<bool> visited(lines.size(), false); // 각 read들의 사용 여부
-	visited[0] = true; // 첫 번째 read 사용
-	int j = 1;
-	while (!allVisited(visited)) { // 모든 read들을 사용할 때까지 반복
-		if (!visited[j]) {
-			string nread_pre = lines[j].substr(0, pattern);
-			string nread_suf = lines[j].substr(lines[j].size() - pattern, pattern);
-
-			// 해시값 계산
-			int nread_pre_hash = gethash(nread_pre);
-			int nread_suf_hash = gethash(nread_suf);
-
-			// result의 앞부분과 read의 뒷부분 겹침
-			if (gethash(result.substr(0, pattern)) == nread_suf_hash && result.substr(0, pattern) == nread_suf) {
-				result = lines[j].substr(0, lines[j].size() - pattern) + result;
-				visited[j] = true;
-			}
-			// result의 뒷부분과 read의 앞부분 겹침
-			else if (gethash(result.substr(result.size() - pattern, pattern)) == nread_pre_hash && result.substr(result.size() - pattern, pattern) == nread_pre) {
-				result += lines[j].substr(pattern);
-				visited[j] = true;
-			}
-		}
-		j = (j + 1) % lines.size(); // read 배열 계속 돌면서 찾기
-	}
-
-	// 복원된 문자열을 result.txt에 저장
-	ofstream resultFile("result.txt");
-	resultFile << result;
-	resultFile.close();
-
-	// 원본과 일치율 계산
-	ifstream originalFile("sequence.txt");
-	if (!originalFile) {
-		cerr << "원본 파일을 열 수 없습니다." << endl;
-		exit(1);
-	}
-
-	string original;
-	getline(originalFile, original);
-	originalFile.close();
-
-	double matchRate = calculateMatchRate(original, result);
-	cout << "복원된 DNA 서열이 원본과 " << matchRate << "% 일치합니다." << endl;
+    // 복원된 문자열을 result.txt에 저장
+    ofstream resultFile("result_rabinkarp.txt");
+    resultFile << result;
+    resultFile.close();
 }
