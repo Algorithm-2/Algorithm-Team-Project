@@ -1,5 +1,5 @@
-#ifndef READS_ASSEMBLER_H
-#define READS_ASSEMBLER_H
+#ifndef E_BRUTEFORCE_H
+#define E_BRUTEFORCE_H
 
 #include <iostream>
 #include <fstream>
@@ -9,8 +9,15 @@
 #include <algorithm>
 #include <ctime>
 
-bool bruteforce_forward(int curlen, vector<string>(&reads)[4]);
-bool bruteforce_backward(int curlen, vector<string>& reads_A, vector<string>& reads_C, vector<string>& reads_T, vector<string>& reads_G);
+
+extern std::string result;
+extern std::vector<std::string> reads_A[4];
+extern std::vector<std::string> reads_C[4];
+extern std::vector<std::string> reads_T[4];
+extern std::vector<std::string> reads_G[4];
+bool bruteforce_forward(int curlen, std::vector<std::string>(&reads)[4]);
+bool bruteforce_backward(int curlen, std::vector<std::string>& reads_A, std::vector<std::string>& reads_C,
+    std::vector<std::string>& reads_T, std::vector<std::string>& reads_G);
 void createReadArray();
 void execute_Bruteforce(int P);
 
