@@ -1,5 +1,5 @@
-#ifndef READS_ASSEMBLER_H
-#define READS_ASSEMBLER_H
+#ifndef BRUTEFORCE_H
+#define BRUTEFORCE_H
 
 #include <iostream>
 #include <fstream>
@@ -9,9 +9,11 @@
 #include <algorithm>
 #include <ctime>
 
-bool d_bruteforce_forward(int curlen, vector<string> reads);
-bool d_bruteforce_backward(int curlen, vector<string> reads);
+extern std::string d_result;
+extern std::vector<std::string> reads_all;
+bool d_bruteforce_forward(int curlen, std::vector<std::string> reads);
+bool d_bruteforce_backward(int curlen, std::vector<std::string> reads);
 void d_createReadArray();
-void execute_Bruteforce(int P);
+void d_execute_Bruteforce(int P);
 
 #endif
