@@ -136,7 +136,7 @@
     <ClCompile Include="kmp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="needlman.cpp" />
-    <ClCompile Include="rabin.cpp" />
+    <ClCompile Include="rabinkarp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bruteforce.h" />
@@ -146,7 +146,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="kmp.h" />
     <ClInclude Include="needlman.h" />
-    <ClInclude Include="rabin.h" />
+    <ClInclude Include="rabinkarp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
