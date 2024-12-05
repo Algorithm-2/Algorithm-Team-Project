@@ -1,10 +1,15 @@
-#ifndef KMP_ASSEMBLER_H
-#define KMP_ASSEMBLER_H
+#ifndef KMP_H
+#define KMP_H
 
-#define MAX_LINE_LENGTH 1000
-#define MAX_RESTORED_LENGTH 1000000
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <ctime>
 
-int kmp(const char* current_line, const char* next_line);
-void execute_KMP();
+void computeLPSArray(const std::string& pattern, int M, std::vector<int>& lps);
+int findOverlap(const std::string& text, const std::string& pattern, int max_length, const std::vector<int>& lps);
+void kmpMerge(int pattern_length);
+void execute_KMP(int pattern_length);
 
 #endif
