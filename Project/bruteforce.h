@@ -3,11 +3,15 @@
 
 #include <iostream>
 #include <fstream>
+#include <stack>
 #include <vector>
 #include <string>
+#include <algorithm>
+#include <ctime>
 
-bool bruteforce(int curlen, std::vector<std::string>& reads);
-void createReadArray();
-void execute_Bruteforce();
+bool d_bruteforce_forward(int curlen, vector<string> reads);
+bool d_bruteforce_backward(int curlen, vector<string> reads);
+void d_createReadArray();
+void execute_Bruteforce(int P);
 
 #endif
