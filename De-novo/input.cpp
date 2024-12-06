@@ -15,7 +15,8 @@ Info input() {
 	cout << "1. bruteforce (0)\n";
 	cout << "2. enhanced bruteforce (1)\n";
 	cout << "3. kmp (2)\n";
-	cout << "4. rabin karp (3)\n";
+	cout << "4. kmp_lps_reuse (3)\n";
+	cout << "5. rabin karp (4)\n";
 	cout << "toggle : "; cin >> info.toggle;
 	return info;
 }

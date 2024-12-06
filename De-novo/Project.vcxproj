@@ -133,9 +133,9 @@
     <ClCompile Include="create_data.cpp" />
     <ClCompile Include="enhanced_bruteforce.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="kmp_lps_reuse.cpp" />
     <ClCompile Include="kmp.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="needlman.cpp" />
     <ClCompile Include="rabinkarp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +145,7 @@
     <ClInclude Include="enhanced_bruteforce.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="kmp.h" />
-    <ClInclude Include="needlman.h" />
+    <ClInclude Include="kmp_lps_reuse.h" />
     <ClInclude Include="rabinkarp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
