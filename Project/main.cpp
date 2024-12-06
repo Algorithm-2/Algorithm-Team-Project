@@ -6,7 +6,6 @@
 #include "bruteforce.h"
 #include "enhanced_bruteforce.h"
 #include "kmp.h"
-#include "needlman.h"
 #include "rabinkarp.h"
 
 int main() {
