@@ -6,6 +6,7 @@
 #include "bruteforce.h"
 #include "enhanced_bruteforce.h"
 #include "kmp.h"
+#include "kmp_lps_reuse.h"
 #include "rabinkarp.h"
 
 int main() {
@@ -23,6 +24,9 @@ int main() {
 		execute_KMP(info.P);
 		break;
 	case 3:
+		r_execute_KMP(info.P);
+		break;
+	case 4:
 		execute_RabinKarp(info.P);
 		break;
 	}

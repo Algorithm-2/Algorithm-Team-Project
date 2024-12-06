@@ -41,16 +41,16 @@
     <ClCompile Include="input.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="kmp.cpp">
+    <ClCompile Include="kmp_lps_reuse.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="needlman.cpp">
+    <ClCompile Include="rabinkarp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="rabinkarp.cpp">
+    <ClCompile Include="kmp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -70,13 +70,13 @@
     <ClInclude Include="input.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="kmp.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="needlman.h">
+    <ClInclude Include="kmp_lps_reuse.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="rabinkarp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="kmp.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

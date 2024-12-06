@@ -32,7 +32,7 @@ int gethash(const string& read) {
     return hash;
 }
 
-void createReadArray() {
+vector<string> rb_createReadArray() {
     ifstream inputFile("reads.txt");
     vector<string> lines;
     string line;
@@ -40,11 +40,12 @@ void createReadArray() {
         lines.push_back(line);
     }
     inputFile.close();
+    return lines;
 }
 
 void execute_RabinKarp(int pattern) {
     
-    createReadArray();
+    vector<string> lines = rb_createReadArray();
     clock_t start = clock();
 
     // 해시 테이블 생성
