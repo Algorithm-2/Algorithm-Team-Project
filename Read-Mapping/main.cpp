@@ -4,12 +4,12 @@
 #include <string>
 #include <cmath>
 #include <unordered_map>
-#include "bruteforce.h"       // Bruteforce ¾Ë°í¸®Áò °ü·Ã Çì´õ
-#include "kmp.h"              // KMP ¾Ë°í¸®Áò °ü·Ã Çì´õ
-#include "rabinKarp.h"       // Rabin-Karp ¾Ë°í¸®Áò °ü·Ã Çì´õ
-#include "aho_corasick.h"     // Aho-Corasick ¾Ë°í¸®Áò °ü·Ã Çì´õ (ÁÖ¼® Ã³¸®)
-#include "boyer_moore.h"      // Boyer-Moore ¾Ë°í¸®Áò °ü·Ã Çì´õ (ÁÖ¼® Ã³¸®)
-#include "utils.h"            // À¯Æ¿¸®Æ¼ ÇÔ¼öµé (½ÃÄö½º ·Îµå, Á¤È®µµ °è»ê µî)
+#include "bruteforce.h"       // Bruteforce ì•Œê³ ë¦¬ì¦˜ ê´€ë ¨ í—¤ë”
+#include "kmp.h"              // KMP ì•Œê³ ë¦¬ì¦˜ ê´€ë ¨ í—¤ë”
+#include "rabinKarp.h"       // Rabin-Karp ì•Œê³ ë¦¬ì¦˜ ê´€ë ¨ í—¤ë”
+#include "aho_corasick.h"     // Aho-Corasick ì•Œê³ ë¦¬ì¦˜ ê´€ë ¨ í—¤ë” (ì£¼ì„ ì²˜ë¦¬)
+#include "boyer_moore.h"      // Boyer-Moore ì•Œê³ ë¦¬ì¦˜ ê´€ë ¨ í—¤ë” (ì£¼ì„ ì²˜ë¦¬)
+#include "utils.h"            // ìœ í‹¸ë¦¬í‹° í•¨ìˆ˜ë“¤ (ì‹œí€€ìŠ¤ ë¡œë“œ, ì •í™•ë„ ê³„ì‚° ë“±)
 #include "sequenceGenerator.h"
 #include "enhanced_bruteforce.h"
 #define N_GRID_SIZE 1
@@ -21,10 +21,10 @@ int main() {
 	int L_grid[L_GRID_SIZE] = { 3, 5, 7, 9, 10 };
 	int P_grid[P_GRID_SIZE] = { 1, 2, 3, 3, 3 };
 
-	// °á°ú Ãâ·Â ÆÄÀÏ
+	// ê²°ê³¼ ì¶œë ¥ íŒŒì¼
 	const string output_filepath = "result_temp.txt";
 	
-	// N_grid¿Í L_gridÀÇ ¸ğµç °ªÀ» »ç¿ëÇÏ¿© ¹İº¹
+	// N_gridì™€ L_gridì˜ ëª¨ë“  ê°’ì„ ì‚¬ìš©í•˜ì—¬ ë°˜ë³µ
 	for (int n_idx = 0; n_idx < N_GRID_SIZE; ++n_idx) {
 		const int N_value = N_grid[n_idx];
 		create_dna(N_value);
@@ -37,35 +37,35 @@ int main() {
 			create_read(L_value, P_value);
 			ofstream file_output(output_filepath, ios::app);
 
-			// reference_genome ·Îµù
+			// reference_genome ë¡œë”©
 			string reference_genome;
 			if (!load_sequences("sequence.txt", reference_genome)) {
 				return 1;
 			}
 			
-			// reads ·Îµù
+			// reads ë¡œë”©
 			vector<string> reads;
 			if (!load_reads("reads.txt", reads)) {
 				return 1;
 			}
 
-			// ÇöÀç ½ÇÇè ÆÄ¶ó¹ÌÅÍ Ãâ·Â
-			cout << "Parameters N=" << N_value << ", L=" << L_value << ", P=" << P_value << endl;
+			// í˜„ì¬ ì‹¤í—˜ íŒŒë¼ë¯¸í„° ì¶œë ¥
+			cout << "\n\nParameters N=" << N_value << ", L=" << L_value << ", P=" << P_value << endl;
 			file_output << "Parameters N=" << N_value << ", L=" << L_value << ", P=" << P_value << endl;
 
 			cout << "Number of Reads : " << reads.size() << "\n";
 			file_output << "Number of Reads : " << reads.size() << "\n";
 
-			// ½ÇÇè ¼öÇà
+			// ì‹¤í—˜ ìˆ˜í–‰
 			run_and_measure(reads, reference_genome, "Bruteforce", execute_bruteforce, output_filepath);
 			run_and_measure(reads, reference_genome, "KMP", execute_KMP, output_filepath);
 			run_and_measure(reads, reference_genome, "Rabin-Karp", execute_rabinkarp, output_filepath);
 			
-			// ±¸Çö»ó ¹®Á¦·Î ÁÖ¼®Ã³¸®
+			// êµ¬í˜„ìƒ ë¬¸ì œë¡œ ì£¼ì„ì²˜ë¦¬
 			//run_and_measure(reads, reference_genome, "Aho_corasick", execute_aho_corasick, output_filepath);
 			//run_and_measure(reads, reference_genome, "Boyer_moore", execute_boyer_moore, output_filepath);
 
-			// ÆÀ¿¡¼­ °³¹ßÇÑ °³¼±µÈ ºê·çÆ®Æ÷½ºÀÇ ½ÇÇà ¹× °á°ú
+			// íŒ€ì—ì„œ ê°œë°œí•œ ê°œì„ ëœ ë¸Œë£¨íŠ¸í¬ìŠ¤ì˜ ì‹¤í–‰ ë° ê²°ê³¼
 			execute_enhanced_bruteforce(reads, reference_genome, output_filepath);
 			
 		}
